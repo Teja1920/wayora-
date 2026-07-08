@@ -3,6 +3,7 @@ import About from "./pages/About";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Buses from "./pages/Buses";
+import Booking from "./pages/Booking";
 import EVHub from "./pages/EVHub";
 import Home from "./pages/Home";
 
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/buses' element={<Buses />} />
+          <Route path='/booking/:busId' element={<Booking />} />
           <Route path='/ev-hubs' element={<EVHub />} />
           <Route path='/about' element={<About />} />
         </Routes>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Stat {
   icon: React.ReactNode;
@@ -258,6 +259,7 @@ const STATS: Stat[] = [
 ];
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
   const [from, setFrom] = useState("Delhi");
   const [to, setTo] = useState("Jaipur");
   const [date, setDate] = useState("2025-01-15");
@@ -270,7 +272,9 @@ const Home: React.FC = () => {
   };
 
   const handleSearch = () => {
-    console.log({ from, to, date, travelers });
+    navigate(
+      `/buses?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}&travelers=${travelers}`,
+    );
   };
 
   return (
@@ -525,6 +529,11 @@ const Home: React.FC = () => {
               <button
                 key={`${route.from}-${route.to}`}
                 type="button"
+                onClick={() =>
+                  navigate(
+                    `/buses?from=${encodeURIComponent(route.from)}&to=${encodeURIComponent(route.to)}&date=2025-01-15&travelers=1`,
+                  )
+                }
                 className={`text-left bg-white rounded-2xl p-5 shadow-[0_8px_24px_rgba(15,30,60,0.06)] border transition-colors cursor-pointer hover:border-blue-300 ${
                   route.highlighted ? "border-blue-300" : "border-transparent"
                 }`}

@@ -1,21 +1,6 @@
 import React, { useMemo, useState } from "react";
-
-interface BusResult {
-  id: string;
-  operator: string;
-  badge: string;
-  busModel: string;
-  departureTime: string;
-  departureCity: string;
-  arrivalTime: string;
-  arrivalCity: string;
-  duration: string;
-  stopType: "Direct" | "1 Stop" | "2+ Stops";
-  amenities: string[];
-  rating: number;
-  seatsLeft: number;
-  pricePerSeat: number;
-}
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { BUS_RESULTS, type BusResult } from "../data/buses";
 
 type FilterOption =
   | "Sleeper"
@@ -39,57 +24,6 @@ const FILTER_OPTIONS: FilterOption[] = [
 ];
 
 const SORT_OPTIONS: SortOption[] = ["Departure", "Price", "Rating"];
-
-const BUS_RESULTS: BusResult[] = [
-  {
-    id: "msrtc-shivneri",
-    operator: "MSRTC Shivneri",
-    badge: "RTC",
-    busModel: "Volvo 9400",
-    departureTime: "06:00",
-    departureCity: "Delhi",
-    arrivalTime: "12:30",
-    arrivalCity: "Jaipur",
-    duration: "6h 30m",
-    stopType: "Direct",
-    amenities: ["Seater", "AC", "AC"],
-    rating: 4.2,
-    seatsLeft: 35,
-    pricePerSeat: 650,
-  },
-  {
-    id: "gsrtc-express",
-    operator: "GSRTC Express",
-    badge: "RTC",
-    busModel: "Ashok Leyland Viking",
-    departureTime: "07:30",
-    departureCity: "Delhi",
-    arrivalTime: "15:00",
-    arrivalCity: "Jaipur",
-    duration: "7h 30m",
-    stopType: "Direct",
-    amenities: ["Seater", "AC"],
-    rating: 4.0,
-    seatsLeft: 22,
-    pricePerSeat: 480,
-  },
-  {
-    id: "rajasthan-royal",
-    operator: "Rajasthan Royal Travels",
-    badge: "Private",
-    busModel: "Volvo Multi-Axle",
-    departureTime: "21:00",
-    departureCity: "Delhi",
-    arrivalTime: "03:30",
-    arrivalCity: "Jaipur",
-    duration: "6h 30m",
-    stopType: "Direct",
-    amenities: ["Sleeper", "AC", "Blanket"],
-    rating: 4.6,
-    seatsLeft: 8,
-    pricePerSeat: 890,
-  },
-];
 
 const FilterIcon: React.FC = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -185,8 +119,15 @@ const Buses: React.FC<BusesProps> = ({
   date = "Jan 15",
   travelers = 1,
 }) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [activeFilters, setActiveFilters] = useState<Set<FilterOption>>(new Set());
   const [sortBy, setSortBy] = useState<SortOption>("Departure");
+
+  const routeFrom = searchParams.get("from") ?? from;
+  const routeTo = searchParams.get("to") ?? to;
+  const routeDate = searchParams.get("date") ?? date;
+  const routeTravelers = Number(searchParams.get("travelers") ?? `${travelers}`) || travelers;
 
   const toggleFilter = (filter: FilterOption) => {
     setActiveFilters((prev) => {
@@ -223,12 +164,12 @@ const Buses: React.FC<BusesProps> = ({
         <div className="max-w-[1360px] mx-auto flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3 flex-wrap">
             <h1 className="flex items-center gap-2.5 text-white text-xl font-bold m-0">
-              {from}
+              {routeFrom}
               <ArrowRightIcon />
-              {to}
+              {routeTo}
             </h1>
             <span className="text-slate-300 text-[15px]">
-              {date} &middot; {travelers} traveler{travelers > 1 ? "s" : ""}
+              {routeDate} &middot; {routeTravelers} traveler{routeTravelers > 1 ? "s" : ""}
             </span>
           </div>
           <span className="text-slate-300 text-[15px]">
@@ -376,6 +317,11 @@ const Buses: React.FC<BusesProps> = ({
                   </div>
                   <button
                     type="button"
+                    onClick={() =>
+                      navigate(
+                        `/booking/${bus.id}?from=${encodeURIComponent(routeFrom)}&to=${encodeURIComponent(routeTo)}&date=${encodeURIComponent(routeDate)}&travelers=${routeTravelers}`,
+                      )
+                    }
                     className="bg-green-500 hover:bg-green-600 text-white font-bold text-sm px-6 py-3 rounded-[10px] transition-colors cursor-pointer whitespace-nowrap"
                   >
                     Select Seats

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
 
 interface Stat {
   icon: React.ReactNode;
@@ -276,8 +275,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f4f6f9] font-sans">
-      <Navbar activePath="/" />
-
       <section className="bg-gradient-to-br from-[#14294b] via-[#1c3a63] to-[#1e3f6b] px-4 sm:px-10 pt-14 pb-24 sm:pb-[120px]">
         <div className="max-w-[1200px] mx-auto">
           <p className="inline-flex items-center gap-2 text-green-400 text-sm font-medium mb-6">

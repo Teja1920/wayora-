@@ -126,7 +126,7 @@ const Footer: React.FC = () => {
             <div className="flex items-center gap-2 mb-4">
               <BusMarkIcon />
               <span className="text-white font-extrabold text-lg tracking-tight">
-                RouteVolt
+                Wayora
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed max-w-[280px] mb-5">
@@ -174,7 +174,7 @@ const Footer: React.FC = () => {
 
         <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-5">
           <p className="text-slate-500 text-sm text-center sm:text-left">
-            &copy; {year} RouteVolt Technologies Pvt. Ltd. All rights reserved.
+            &copy; {year} AJ Groups Pvt. Ltd. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
             {SOCIALS.map((social) => (

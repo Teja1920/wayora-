@@ -34,8 +34,8 @@ const Navbar: React.FC<NavbarProps> = ({ activePath = "/" }) => {
               <circle cx="17" cy="18" r="1.6" fill="white" />
             </svg>
           </span>
-          <span className="text-white text-xl font-bold tracking-tight">BharatGo</span>
-          <span className="text-green-400 text-sm font-semibold ml-0.5">+ EV</span>
+          <span className="text-white text-xl font-bold tracking-tight">Wayora</span>
+          <span className="text-green-400 text-sm font-semibold ml-0.5"></span>
           </a>
 
         <nav className="flex items-center gap-1.5" aria-label="Primary">
